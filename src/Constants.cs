@@ -1,16 +1,20 @@
 using System;
 using System.Collections;
+using System.ComponentModel;
 
 namespace BitwiseStor.Constants
 {
-    private static class Values
+    public static class Values
     {
+        private const string PROPS = "PROPS";
+        private const string vPROPS = "bwsPackedPropNames";
+        private const string VALUE = "VALUE";
+        private const string vVALUE = "bwsPackedValue";
         public const int UPPER_LIMIT = 16777215;
         public const string MASK = "000000000000000000000000";
-        public const string[] LABELS = { "PROPS", "bwsPackedPropNames", "VALUE", "bwsPackedValue" };
     }
 
-    private enum Errors 
+    public enum Errors 
     {
         [Description("Upper limit exceeded.")]
         UPPER_LIMIT_EXCEEDED,
