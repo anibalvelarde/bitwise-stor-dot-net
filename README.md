@@ -1,6 +1,6 @@
 # bitwise-stor-dot-net
 
-A `dot.net`-based library for managing/storing up to 31 Boolean switches within an integer value. 
+A `dot.net`-based library for managing/storing up to 31 Boolean switches within an integer value. This is a port to .NET from the JavaScript (NPM) version of this same library, [`bitwise-stor` NPM Package](https://www.npmjs.com/package/@aevnpm/bitwise-stor). 
 
 ## Install
 Using the `.NET Core` CLI
