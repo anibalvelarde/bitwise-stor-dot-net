@@ -16,6 +16,15 @@ namespace BitwiseStor
            return this.Pack(bds);
         }
 
+        public bool[] UnpackArrayOfBool(int packedBits)
+        {
+            return this
+                .Unpack(packedBits)
+                .ToCharArray()
+                .Select(item => (item == '1') ? true : false)
+                .ToArray();
+        }
+
         public int PackArrayOfBits(int[] bits)
         {
            var intArray = bits ?? throw new ArgumentNullException(nameof(bits));
@@ -38,7 +47,18 @@ namespace BitwiseStor
 
         public string Unpack(int packedBits)
         {
+            if (packedBits < 0) throw new ArgumentOutOfRangeException(nameof(packedBits));
+            if (packedBits == 0) return "0000000000000000000000000000000";
             return Convert.ToString(packedBits, 2);
+        }
+
+        public int[] UnpackArrayOfBinaryDigits(int packedBits)
+        {
+            return this
+                .Unpack(packedBits)
+                .ToCharArray()
+                .Select(item => (item == '1') ? 1 : 0)
+                .ToArray();
         }
     }
 }
