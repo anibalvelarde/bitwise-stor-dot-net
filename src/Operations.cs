@@ -2,30 +2,66 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BitwiseStor
+namespace BitwiseStorN
 {
     public class Operations : IOperations
     {
-        public int PackArrayOfBool(bool[] bits)
+        int IOperations.Pack(string binaryDigitString)
+        {
+            if (String.IsNullOrEmpty(binaryDigitString)) return 0;
+            return Convert.ToInt32(binaryDigitString, 2);
+        }
+
+        string IOperations.Unpack(int packedBits)
+        {
+            if (packedBits < 0) throw new ArgumentOutOfRangeException(nameof(packedBits));
+            if (packedBits == 0) return "0000000000000000000000000000000";
+            return Convert.ToString(packedBits, 2);
+        }
+
+        int IOperations.PackArrayOf<T>(T bits) {
+            if (bits is null) throw new ArgumentNullException(nameof(bits));
+            
+            return bits switch
+            {
+                bool[] arrayOfBooleans => this.PackArrayOfBooleans(arrayOfBooleans),
+                int[] arrayOfBits => this.PackArrayOfBits(arrayOfBits),
+                _ => throw new NotSupportedException($"Unsupported type of [{typeof(T)}]")
+            };
+        }
+        T IOperations.UnpackArrayOf<T>(int packedBits)
+        {
+            var @switch = new Dictionary<Type, Func<int, object>>() {
+                { typeof(bool[]), this.UnpackArrayOfBooleans},
+                { typeof(int[]), this.UnpackArrayOfBits}
+            };
+
+            if (!@switch.ContainsKey(typeof(T))) throw new TypeLoadException($"Unsupported type [{typeof(T)}].");
+
+            object val = @switch[typeof(T)](packedBits);
+            return (T) Convert.ChangeType(val, typeof(T));
+        }
+
+        private int PackArrayOfBooleans(bool[] bits)
         {
            var booleanArray = bits ?? throw new ArgumentNullException(nameof(bits));
            var bds = booleanArray.Aggregate(
                seed: "",
                func: (current, next) => current + (next ? "1" : "0")
            );
-           return this.Pack(bds);
+           return ((IOperations)this).Pack(bds);
         }
 
-        public bool[] UnpackArrayOfBool(int packedBits)
+        private bool[] UnpackArrayOfBooleans(int packedBits)
         {
-            return this
+            return ((IOperations)this)
                 .Unpack(packedBits)
                 .ToCharArray()
                 .Select(item => (item == '1') ? true : false)
                 .ToArray();
         }
 
-        public int PackArrayOfBits(int[] bits)
+        private int PackArrayOfBits(int[] bits)
         {
            var intArray = bits ?? throw new ArgumentNullException(nameof(bits));
            var bds = intArray.Aggregate(
@@ -36,25 +72,12 @@ namespace BitwiseStor
                    return current + (next == 1 ? "1" : "0");
                }
            );
-           return this.Pack(bds);
+           return ((IOperations)this).Pack(bds);
         }
 
-        public int Pack(string binaryDigitString)
+        private int[] UnpackArrayOfBits(int packedBits)
         {
-            if (String.IsNullOrEmpty(binaryDigitString)) return 0;
-            return Convert.ToInt32(binaryDigitString, 2);
-        }
-
-        public string Unpack(int packedBits)
-        {
-            if (packedBits < 0) throw new ArgumentOutOfRangeException(nameof(packedBits));
-            if (packedBits == 0) return "0000000000000000000000000000000";
-            return Convert.ToString(packedBits, 2);
-        }
-
-        public int[] UnpackArrayOfBinaryDigits(int packedBits)
-        {
-            return this
+            return ((IOperations)this)
                 .Unpack(packedBits)
                 .ToCharArray()
                 .Select(item => (item == '1') ? 1 : 0)

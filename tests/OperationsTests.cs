@@ -1,5 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using BitwiseStor;
+using BitwiseStorN;
 using System;
 
 namespace BitwiseStor.Tests
@@ -13,10 +13,10 @@ namespace BitwiseStor.Tests
         public void Should_Throw_When_ArrayIsNull_Boolean_Values(bool[] bits)
         {
             // arrange..
-            var bitOps = new Operations();
+            IOperations bitOps = new Operations();
 
             // act...
-            var result = bitOps.PackArrayOfBool(bits);
+            var result = bitOps.PackArrayOf<bool[]>(bits);
 
             // assert - expects exception
         }
@@ -27,10 +27,10 @@ namespace BitwiseStor.Tests
         public void Should_Throw_When_ArrayIsNull_Bit_Values(int[] bits)
         {
             // arrange..
-            var bitOps = new Operations();
+            IOperations bitOps = new Operations();
 
             // act...
-            var result = bitOps.PackArrayOfBits(bits);
+            var result = bitOps.PackArrayOf<int[]>(bits);
 
             // assert - expects exception
         }
@@ -41,10 +41,10 @@ namespace BitwiseStor.Tests
         public void Should_Throw_When_Array_Has_NonBit_Values(int[] bits)
         {
             // arrange..
-            var bitOps = new Operations();
+            IOperations bitOps = new Operations();
 
             // act...
-            var result = bitOps.PackArrayOfBits(bits);
+            var result = bitOps.PackArrayOf<int[]>(bits);
 
             // assert - expects exception
         }
@@ -55,7 +55,7 @@ namespace BitwiseStor.Tests
         public void Should_Throw_When_Unpacking_Invalid_Values(int packedBits)
         {
             // arrange..
-            var bitOps = new Operations();
+            IOperations bitOps = new Operations();
 
             // act...
             var result = bitOps.Unpack(packedBits);
@@ -71,10 +71,10 @@ namespace BitwiseStor.Tests
         public void Should_pack_correct_value_from_array_of_boolean_values(bool[] bits, int expectedValue) 
         {
             // arrange...
-            var bitOps = new Operations();
+            IOperations bitOps = new Operations();
 
             // act...
-            var result = bitOps.PackArrayOfBool(bits);
+            var result = bitOps.PackArrayOf<bool[]>(bits);
 
             // assert...
             Assert.AreEqual(expectedValue, result);
@@ -88,10 +88,10 @@ namespace BitwiseStor.Tests
         public void Should_pack_correct_value_from_array_of_integer_values(int[] bits, int expectedValue) 
         {
             // arrange...
-            var bitOps = new Operations();
+            IOperations bitOps = new Operations();
 
             // act...
-            var result = bitOps.PackArrayOfBits(bits);
+            var result = bitOps.PackArrayOf<int[]>(bits);
 
             // assert...
             Assert.AreEqual(expectedValue, result);
@@ -106,7 +106,7 @@ namespace BitwiseStor.Tests
         public void Should_pack_correct_value_when_all_bits_are_off(string stringOfBits)
         {
             // arrange...
-            var bitOps = new Operations();
+            IOperations bitOps = new Operations();
 
             // act...
             var result = bitOps.Pack(stringOfBits);
@@ -124,7 +124,7 @@ namespace BitwiseStor.Tests
         public void Should_pack_correct_value_when_all_bits_are_on(string stringOfBits, int expectedResult)
         {
             // arrange...
-            var bitOps = new Operations();
+            IOperations bitOps = new Operations();
 
             // act...
             var result = bitOps.Pack(stringOfBits);
@@ -138,7 +138,7 @@ namespace BitwiseStor.Tests
         public void Should_pack_correct_value_when_some_bits_are_on(string stringOfBits, int expectedResult)
         {
             // arrange...
-            var bitOps = new Operations();
+            IOperations bitOps = new Operations();
 
             // act...
             var result = bitOps.Pack(stringOfBits);
@@ -159,7 +159,7 @@ namespace BitwiseStor.Tests
         public void Should_unpack_correct_value_when_some_bits_are_on(string expectedResult, int packedBits)
         {
             // arrange...
-            var bitOps = new Operations();
+            IOperations bitOps = new Operations();
 
             // act...
             var result = bitOps.Unpack(packedBits);
@@ -174,10 +174,10 @@ namespace BitwiseStor.Tests
         public void Should_unpack_correctly_to_array_of_boolean(int packedBits, bool[] expectedResult)
         {
             // arrange...
-            var bitOps = new Operations();
+            IOperations bitOps = new Operations();
 
             // act...
-            var actualResult = bitOps.UnpackArrayOfBool(packedBits);
+            var actualResult = bitOps.UnpackArrayOf<bool[]>(packedBits);
 
             // assert..
             CollectionAssert.AreEqual(expectedResult, actualResult);
@@ -189,10 +189,10 @@ namespace BitwiseStor.Tests
         public void Should_unpack_correctly_to_array_of_binary_digits(int packedBits, int[] expectedResult)
         {
             // arrange...
-            var bitOps = new Operations();
+            IOperations bitOps = new Operations();
 
             // act...
-            var actualResult = bitOps.UnpackArrayOfBinaryDigits(packedBits);
+            var actualResult = bitOps.UnpackArrayOf<int[]>(packedBits);
 
             // assert..
             CollectionAssert.AreEqual(expectedResult, actualResult);
