@@ -30,3 +30,4 @@ jobs:
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
           # NuGet package id, used for version detection & defaults to project name
           PACKAGE_NAME: BitwiseStorN
+          VERSION_REGEX: ^\s*<Version>(.*)<\/Version>$
