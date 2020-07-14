@@ -24,7 +24,11 @@ jobs:
     - name: Test
       run: dotnet test --no-restore --verbosity normal
     - name: Publish BitwiseStorN
-      uses: brandedoutcast/publish-nuget@v2.5.2
+      uses: brandedoutcast/publish-nuget@v2.5.3
+      when:
+        branch:
+          only:
+            - master
       with:
           PROJECT_FILE_PATH: src/BitwiseStor.csproj
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
