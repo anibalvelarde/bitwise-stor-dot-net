@@ -28,3 +28,5 @@ jobs:
       with:
           PROJECT_FILE_PATH: src/BitwiseStor.csproj
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+          # NuGet package id, used for version detection & defaults to project name
+          PACKAGE_NAME: BitwiseStorN
