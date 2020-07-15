@@ -29,3 +29,4 @@ jobs:
           # NuGet package id, used for version detection & defaults to project name
           PACKAGE_NAME: BitwiseStorN
           INCLUDE_SYMBOLS: true
+          VERSION_REGEX: <Version>(.*)<\/Version>
