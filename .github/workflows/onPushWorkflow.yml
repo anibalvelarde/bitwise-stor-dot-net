@@ -1,9 +1,7 @@
-name: BitwiseStor DotNet Push Only
+name: BitwiseStorN Continuous Integration
 
 on:
   push:
-    branches: [ !master ]
-  pull_request:
     branches: [ !master ]
 
 jobs:
