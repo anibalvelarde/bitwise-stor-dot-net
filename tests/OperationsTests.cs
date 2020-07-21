@@ -197,5 +197,35 @@ namespace BitwiseStor.Tests
             // assert..
             CollectionAssert.AreEqual(expectedResult, actualResult);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(NotImplementedException))]
+        public void Should_pack_JSON_object_correctly(){
+            // arrange...
+            string jsonData = "{ name: 'Billy Russo', hasScars: true, canFeelLove: false, age: 38, cashOnHand: 4500, isHospitalized: false, isDeceased: false, heightInMeeters: 1.9, hasBankAccount: true}";
+            string expectedResult = "{ name: 'Billy Russo', age: 38, cashOnHand: 4500, heightInMeeters: 1.9, bwsPackedPropNames: 'hasBankAccount|isDeceased|isHospitalized|canFeelLove|hasScars|', bwsPackedValue: 17}";
+            IOperations bitOps = new Operations();
+
+            // act...
+            var actualResult = bitOps.PackObject(jsonData);
+
+            // assert...
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NotImplementedException))]
+        public void Should_unpack_JSON_object_correctly(){
+            // arrange...
+            string expectedResult = "{ name: 'Billy Russo', hasScars: true, canFeelLove: false, age: 38, cashOnHand: 4500, isHospitalized: false, isDeceased: false, heightInMeeters: 1.9, hasBankAccount: true}";
+            string jsonData = "{ name: 'Billy Russo', age: 38, cashOnHand: 4500, heightInMeeters: 1.9, bwsPackedPropNames: 'hasBankAccount|isDeceased|isHospitalized|canFeelLove|hasScars|', bwsPackedValue: 17}";
+            IOperations bitOps = new Operations();
+
+            // act...
+            var actualResult = bitOps.UnpackObject(jsonData);
+
+            // assert...
+            Assert.AreEqual(expectedResult, actualResult);
+        }
     }
 }

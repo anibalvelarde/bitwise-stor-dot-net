@@ -42,6 +42,16 @@ namespace BitwiseStorN
             return (T) Convert.ChangeType(val, typeof(T));
         }
 
+        string IOperations.PackObject(string jsonData)
+        {
+            throw new NotImplementedException();
+        }
+
+        string IOperations.UnpackObject(string jsonData)
+        {
+            throw new NotImplementedException();
+        }
+
         private int PackArrayOfBooleans(bool[] bits)
         {
            var booleanArray = bits ?? throw new ArgumentNullException(nameof(bits));
