@@ -22,11 +22,12 @@ jobs:
     - name: Test
       run: dotnet test --no-restore --verbosity normal
     - name: Publish To NuGet BitwiseStorN
-      uses: brandedoutcast/publish-nuget@v2.5.3
+      uses: brandedoutcast/publish-nuget@v2.5.4
       with:
           PROJECT_FILE_PATH: ./src/BitwiseStor.csproj
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
           # NuGet package id, used for version detection & defaults to project name
           PACKAGE_NAME: BitwiseStorN
           INCLUDE_SYMBOLS: true
-          VERSION_REGEX: <Version>(.*)<\/Version>
+          # VERSION_REGEX: <Version>(.*)<\/Version>
+          TAG_FORMAT: v*

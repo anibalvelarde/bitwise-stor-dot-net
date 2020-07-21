@@ -33,5 +33,17 @@ namespace BitwiseStorN
         /// <param name="packedBits">An integer whose binary representation forms the basis for the returned string of bits</param>
         /// <returns>A string of binary digits where each character in the string is either a zero ("0") or a one ("1")</returns>
         string Unpack(int packedBits);
+        /// <summary>
+        /// Packs all boolean properties of a JSON object into a bitwise value, up to 31 bits.
+        /// </summary>
+        /// <param name="jsonData">A well-formed JSON string</param>
+        /// <returns>A well-formed JSON string that coalesces to an inteter all boolean values within the input JSON string.</returns>
+        string PackObject(string jsonData);
+        /// <summary>
+        /// Reverses the action done by .PackObject() method
+        /// </summary>
+        /// <param name="jsonData">A well-formed, already packed JSON object</param>
+        /// <returns>A well-formed, unpacked JSON object</returns>
+        string UnpackObject(string jsonData);
     }
 }
