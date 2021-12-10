@@ -1,23 +1,29 @@
 # bitwise-stor-dot-net
 
-A `dot.net`-based library for managing/storing up to 31 Boolean switches within an integer value. This is a port to .NET Core from the JavaScript (NPM) version of this same library, [`bitwise-stor` NPM Package](https://www.npmjs.com/package/@aevnpm/bitwise-stor). 
+![](https://vistr.dev/badge?repo=anibalvelarde.bitwise-stor-dot-net)
+A `dot.net`-based library for managing/storing up to 31 Boolean switches within an integer value. This is a port to .NET Core from the JavaScript (NPM) version of this same library, [`bitwise-stor` NPM Package](https://www.npmjs.com/package/@aevnpm/bitwise-stor).
 
 ## Install
+
 Using the `.NET Core` CLI
+
 ```
 $ dotnet add package BitwiseStoreN
 ```
 
 ## Usage
+
 ### Simple cases:
+
 `Pack()` & `Unpack()` with primitive value manipulation:
+
 ```csharp
 using BitwiseStorN;
 
 // intialize bitwise packager
 var bws = new Operations();
 
-// get integer value from boolean string 
+// get integer value from boolean string
 int val = bws.pack('101');  // val = 5
 
 // get a binary digit string (right-most-significant) from an integer
@@ -25,15 +31,17 @@ string bits = bws.unpack(val); // bits = "101"
 ```
 
 ### Array cases:
+
 `PackArrayOf<T>()` & `UnpackArrayOf<T>()` with, you guessed it, `Array` types
+
 ```csharp
 using BitwiseStorN;
 var bws = new Operations();
 
-// get integer value from array of bits string 
+// get integer value from array of bits string
 var val = bws.PackArrayOf<int>(new int[] {1, 0, 1});  // val = 5
 
-// get integer value from array of bool values 
+// get integer value from array of bool values
 var val2 = bws.PackArrayOf<bool>(new bool[] {true, false, true});  // val = 5
 
 // get a binary digit string (right-most-significant) from an integer
@@ -42,8 +50,11 @@ var bits = bws.unpackArrayOf<bool>(val); // bits = [true, false, true]
 ```
 
 ## Not Implemented yet...
+
 ### Object cases:
+
 `Pack()` & `Unpack()` from a JSON object. The following requirements apply:
+
 - only boolean properties get packed
 - packing is shallow (no deep navigation of the object)
 - only up to 31 values are packed
@@ -52,22 +63,23 @@ var bits = bws.unpackArrayOf<bool>(val); // bits = [true, false, true]
 - the first boolean key is the most significant bit when packed
 
 Example (using JS):
+
 ```js
 const bws = require("@aevnpm/bitwise-stor");
 const jsonObj = {
-    name: 'Billy Russo',
-    hasScars: true,
-    canFeelLove: false,
-    age: 38,
-    cashOnHand: 4500,
-    isHospitalized: false,
-    isDeceased: false,
-    heightInMeeters: 1.9,
-    hasBankAccount: true
-}
+  name: "Billy Russo",
+  hasScars: true,
+  canFeelLove: false,
+  age: 38,
+  cashOnHand: 4500,
+  isHospitalized: false,
+  isDeceased: false,
+  heightInMeeters: 1.9,
+  hasBankAccount: true,
+};
 
 const packedObject = bws.packJson(jsonObj);
-console.log({ packedObject })
+console.log({ packedObject });
 
 // Console:
 //  packedObject: {
@@ -77,7 +89,7 @@ console.log({ packedObject })
 //    heightInMeeters: 1.9,
 //    bwsPackedPropNames: { ... 64-bit encoding ...},
 //    bwsPackedValue: 17
-//  } 
+//  }
 
 const unpackedObject = bws.unpackJson(packedObj);
 console.log({ unpackedObject });
